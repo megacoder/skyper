@@ -9,11 +9,11 @@ while getopts Xu: c; do
 	esac
 done
 shift $(( ${OPTIND} - 1 ))
-IMAGE="skype"
+IMAGE="skyper"
 docker	run -it								\
 	--rm								\
 	--user="${USER}"						\
-	--env="DISPLAY"						\
+	--env="DISPLAY"							\
 	--workdir="/home/${USER}"					\
 	--volume="/home/${USER}:/home/${USER}"				\
 	--volume='/tmp/.X11-unix:/tmp/.X11-unix:ro'			\
@@ -23,5 +23,5 @@ docker	run -it								\
 	--volume="/etc/sudoers:/etc/sudoers:ro"				\
 	--volume="/etc/sudoers.d:/etc/sudoers.d:ro"			\
 	"${IMAGE}"							\
-	"${@:-/bin/zsh}"
+	"${@:-/usr/bin/skypeforlinux}"
 exit $?
