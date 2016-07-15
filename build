@@ -1,0 +1,6 @@
+#!/bin/zsh
+exec	docker build							\
+	--rm								\
+	--force-rm							\
+	-t skyper							\
+	.
