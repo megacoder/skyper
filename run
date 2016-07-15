@@ -1,0 +1,27 @@
+#!/bin/zsh
+# vim: noet nonu ts=8 sw=8
+DEBUG=
+while getopts Xu: c; do
+	case "${c}" in
+		X )	DEBUG=echo;;
+		u )	USER="${OPTARG}";;
+		* )	echo "Huh?" >&2; exit 1;;
+	esac
+done
+shift $(( ${OPTIND} - 1 ))
+IMAGE="skype"
+docker	run -it								\
+	--rm								\
+	--user="${USER}"						\
+	--env="DISPLAY"						\
+	--workdir="/home/${USER}"					\
+	--volume="/home/${USER}:/home/${USER}"				\
+	--volume='/tmp/.X11-unix:/tmp/.X11-unix:ro'			\
+	--volume="/etc/group:/etc/group:ro"				\
+	--volume="/etc/passwd:/etc/passwd:ro"				\
+	--volume="/etc/shadow:/etc/shadow:ro"				\
+	--volume="/etc/sudoers:/etc/sudoers:ro"				\
+	--volume="/etc/sudoers.d:/etc/sudoers.d:ro"			\
+	"${IMAGE}"							\
+	"${@:-/bin/zsh}"
+exit $?
